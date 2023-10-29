@@ -46,7 +46,7 @@ interface CartProps {
   products: CartProducts[];
 }
 
-interface ProductsProps {
+export interface ProductsProps {
   id: number;
   title: string;
   price: number;
@@ -117,12 +117,13 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   
- 
+
 
   useEffect(() => {
+    setLoading(true);
     GetDataProducts();
     GetAllUsers();
-    setLoading(true);
+    setLoading(false);
   }, []);
 
   useEffect(() => {

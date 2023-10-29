@@ -5,7 +5,7 @@ export function Loader() {
     const {loading} = useContext(CartContext)
 
   return (
-    <div className="inset-0  bg-gray-800 fixed flex w-full h-full items-center justify-center duration-300 transition-opacity z-10" style={!loading ? {display: "none"} : {display: "flex"} }>
+    <div className="inset-0   fixed flex w-full h-full items-center justify-center duration-300 transition-opacity z-10" style={!loading ? {display: "none"} : {display: "flex"} }>
       <div className="flex-col">
         <div className="w-24 h-24">
           <svg viewBox="0 0 860.1 876.5">
@@ -34,7 +34,7 @@ export function Loader() {
           </svg>
         </div>
         <div className="mt-3 text-gray-200 font-mono text-sm sm:text-xs">
-        logging in ...
+        Loading...
         </div>
       </div>
     </div>

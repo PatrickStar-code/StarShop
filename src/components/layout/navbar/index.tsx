@@ -42,25 +42,9 @@ export function Navbar() {
 
   return (
     <>
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-100 px-12">
         <div className="flex-1">
-          <div className="btn btn-ghost normal-case text-xl">StarShop</div>
-          <div className="dropdown">
-            <label tabIndex={0} className="btn m-1">
-              Categorias
-            </label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <a>Item 2</a>
-              </li>
-            </ul>
-          </div>
+          <img src="src/assets/logo.png" alt=""className="w-20 pt-2" />
         </div>
 
         <div className="flex-none">
