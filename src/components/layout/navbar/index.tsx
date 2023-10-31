@@ -1,18 +1,15 @@
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { CartContext } from "../../../Context/Cart";
-
+import { ListProduct } from "./Components/listProduct";
 
 const schema = z.object({
   username: z.string(),
   password: z.string(),
 });
 
-
- 
 type FormData = z.infer<typeof schema>;
 
 export function Navbar() {
@@ -20,31 +17,26 @@ export function Navbar() {
     resolver: zodResolver(schema),
   });
 
-
-  const {GetUser,User,loadingLogin,LoginError,Cart,subtotal} = useContext(CartContext)
+  const { GetUser, User, loadingLogin, LoginError, Cart, subtotal } =
+    useContext(CartContext);
 
   function username(data: FormData) {
     GetUser(data);
     reset();
   }
 
-
-  
-
-    function objIsEmpty(obj : object) {
-      for (const _prop in obj) {
-        return false;
-      }
-      return true;
+  function objIsEmpty(obj: object) {
+    for (const _prop in obj) {
+      return false;
     }
-    
-  
+    return true;
+  }
 
   return (
     <>
       <div className="navbar bg-base-100 px-12">
         <div className="flex-1">
-          <img src="src/assets/logo.png" alt=""className="w-20 pt-2" />
+          <img src="src/assets/logo.png" alt="" className="w-20 pt-2" />
         </div>
 
         <div className="flex-none">
@@ -65,7 +57,9 @@ export function Navbar() {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <span className="badge badge-sm indicator-item">{!objIsEmpty(Cart) ? Cart.products.length : 0  }</span>
+                <span className="badge badge-sm indicator-item">
+                  {!objIsEmpty(Cart) ? Cart.products.length : 0}
+                </span>
               </div>
             </label>
             <div
@@ -73,8 +67,24 @@ export function Navbar() {
               className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
             >
               <div className="card-body">
-                <span className="font-bold text-lg">{!objIsEmpty(Cart) ? Cart.products.length : 0  } Items</span>
-                <span className="text-info">Subtotal: R$ {subtotal.toFixed(2)}</span>
+                <span className="font-bold text-lg">
+                  {!objIsEmpty(Cart) ? Cart.products.length : 0} Items
+                </span>
+                <div className="flex flex-col">
+                  <div>
+                    {!objIsEmpty(Cart) ?
+                      Cart.products.map((product) => (
+                        <ListProduct key={product.productId} product={product} />
+                      )) : (
+                        <span className="text-info">Cart is empty</span>
+                      )
+                      
+                      }
+                  </div>
+                </div>
+                <span className="text-info">
+                  Subtotal: R$ {subtotal.toFixed(2)}
+                </span>
                 <div className="card-actions">
                   <button className="btn btn-primary btn-block">
                     View cart
@@ -113,12 +123,17 @@ export function Navbar() {
                   document.getElementById("usernameModal")?.showModal()
                 }
               >
-                Entrar
+                lOGIN
               </button>
               <dialog id="usernameModal" className="modal sm:modal-middle">
                 <div className="modal-box">
+                  <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn mb-5 float-right">X</button>
+                  </form>
                   <h3 className="font-bold text-lg">Login</h3>
                   <p className="py-4">login to your account</p>
+
                   <form onSubmit={handleSubmit((data) => username(data))}>
                     <div className="form-control">
                       <label className="label">
@@ -145,21 +160,37 @@ export function Navbar() {
                       />
                     </div>
                     <div className="form-control mt-6">
-                      <button className="btn btn-primary" type="submit" disabled={loadingLogin}>
-                         {loadingLogin ? "..." : "Entrar"}
+                      <button
+                        className="btn btn-primary"
+                        type="submit"
+                        disabled={loadingLogin}
+                      >
+                        {loadingLogin ? "..." : "Entrar"}
                       </button>
                     </div>
                   </form>
                   {LoginError && (
                     <div className="alert mt-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>Username or password invalid</span>
-                  </div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-current shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>Username or password invalid</span>
+                    </div>
                   )}
                 </div>
-                
+
                 <form method="dialog" className="modal-backdrop">
-                  <button type="button">close</button>
+                  <button>close</button>
                 </form>
               </dialog>
             </div>

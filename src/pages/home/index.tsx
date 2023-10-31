@@ -1,6 +1,11 @@
 import { useContext } from "react";
 import { CardProduct } from "./components/cardProduct";
-import { CartContext } from "../../Context/Cart";
+import { CartContext } from "../../Context/Cart"
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import { FreeMode } from "swiper/modules";
+
 
 export function Home() {
   const { products } = useContext(CartContext);
@@ -31,49 +36,160 @@ export function Home() {
         <h3 className="text-gray-600 text-2xl font-medium flex items-center justify-center">
           Eletronics
         </h3>
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+        <Swiper
+          modules={[FreeMode]}
+          freeMode={true}
+          slidesPerView={4}
+          grabCursor={true}
+          className="mySwiper mt-4"
+          breakpoints={{
+            0 : {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            480 : {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            768 : {
+              slidesPerView: 3,
+              spaceBetween: 15,
+            },
+            1024 : {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+            
+            
+          }}
+          >
           {products
             .filter((product) => product.category === "electronics")
             .map((product) => (
-              <CardProduct key={product.id} product={product} />
+              <SwiperSlide  key={product.id}>
+              <CardProduct product={product} />
+              </SwiperSlide>
             ))}
-        </div>
+            </Swiper>
       </div>
       <div className="mt-16">
         <h3 className="text-gray-600 text-2xl font-medium flex items-center justify-center">
         Jewelery
         </h3>
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+        <Swiper
+          modules={[FreeMode]}
+          freeMode={true}
+          slidesPerView={4}
+          grabCursor={true}
+          className="mySwiper mt-4"
+          breakpoints={{
+            0 : {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            480 : {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            768 : {
+              slidesPerView: 3,
+              spaceBetween: 15,
+            },
+            1024 : {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+            
+            
+          }}
+          >
           {products
             .filter((product) => product.category === "jewelery")
             .map((product) => (
-              <CardProduct key={product.id} product={product} />
+              <SwiperSlide key={product.id}>
+              <CardProduct  product={product} />
+              </SwiperSlide>
             ))}
-        </div>
+            </Swiper>
       </div>
       <div className="mt-16">
         <h3 className="text-gray-600 text-2xl font-medium flex items-center justify-center">
         Men's clothing
         </h3>
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-          {products
+        <Swiper
+          modules={[FreeMode]}
+          freeMode={true}
+          slidesPerView={4}
+          grabCursor={true}
+          className="mySwiper mt-4"
+          breakpoints={{
+            0 : {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            480 : {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            768 : {
+              slidesPerView: 3,
+              spaceBetween: 15,
+            },
+            1024 : {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+            
+            
+          }}
+          >
+                      {products
             .filter((product) => product.category === "men's clothing")
             .map((product) => (
-              <CardProduct key={product.id} product={product} />
+              <SwiperSlide key={product.id}>
+              <CardProduct product={product} />
+              </SwiperSlide>
             ))}
-        </div>
+        </Swiper>
       </div>
       <div className="mt-16">
         <h3 className="text-gray-600 text-2xl font-medium flex items-center justify-center">
         Women's clothing
         </h3>
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-          {products
+        <Swiper
+          modules={[FreeMode]}
+          freeMode={true}
+          slidesPerView={4}
+          grabCursor={true}
+          className="mySwiper mt-4"
+          breakpoints={{
+            0 : {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            480 : {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            768 : {
+              slidesPerView: 3,
+              spaceBetween: 15,
+            },
+            1024 : {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+            
+            
+          }}
+          >          {products
             .filter((product) => product.category === "women's clothing")
             .map((product) => (
-              <CardProduct key={product.id} product={product} />
+              <SwiperSlide key={product.id}>
+              <CardProduct product={product} />
+              </SwiperSlide>
             ))}
-        </div>
+        </Swiper>
       </div>
     </>
   );
