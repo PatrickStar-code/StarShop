@@ -14,6 +14,8 @@ interface CartContextProps {
   Cart: CartProps;
   subtotal: number;
   GetUser: (data: { username: string; password: string }) => void;
+  HandleLessProduct: (id: number) => void;
+  HandleAddProduct: (id: number) => void;
 }
 
 interface UsersProps {
@@ -116,8 +118,53 @@ export function CartProvider({ children }: CartProviderProps) {
     return true;
   }
 
-  
 
+  function HandleLessProduct(id: number) {
+    if(Cart.products.length > 0){
+      setCart((state) => {
+        const updatedProducts = state.products.map((product) => {
+          if (id === product.productId) {
+            if(product.quantity > 0){
+            return {
+              ...product,
+              quantity: product.quantity - 1,
+            };
+          }
+        }
+          return product;
+        });
+        return {
+          ...state,
+          products: updatedProducts,
+        };
+      });
+        
+    }
+  }
+  
+  function HandleAddProduct(id: number) {
+    if(Cart.products.length > 0){
+      setCart((state) => {
+        const updatedProducts = state.products.map((product) => {
+          if (id === product.productId) {
+            
+            return {
+              ...product,
+              quantity: product.quantity + 1,
+            };
+          }
+          return product;
+        });
+        return {
+          ...state,
+          products: updatedProducts,
+        };
+      });
+      
+        
+    }
+    
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -134,7 +181,7 @@ export function CartProvider({ children }: CartProviderProps) {
         Cart.products.map((Cartproduct) => {
           products.map((product) => {
             if (Cartproduct.productId === product.id) {
-              setSubtotal((state) => state + product.price * Cartproduct.quantity);
+              return setSubtotal((state) => state + (product.price * Cartproduct.quantity));
             }
           })
         })
@@ -157,6 +204,9 @@ export function CartProvider({ children }: CartProviderProps) {
         subtotal,
         loading,
         GetUser,
+        HandleLessProduct,
+        HandleAddProduct
+
       }}
     >
       {children}

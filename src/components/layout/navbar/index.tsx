@@ -25,6 +25,8 @@ export function Navbar() {
     reset();
   }
 
+  
+
   function objIsEmpty(obj: object) {
     for (const _prop in obj) {
       return false;
