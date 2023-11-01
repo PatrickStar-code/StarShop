@@ -29,7 +29,7 @@ export function Navbar() {
 
   function objIsEmpty(obj: object) {
     for (const _prop in obj) {
-      return false;
+      return false; 
     }
     return true;
   }

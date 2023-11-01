@@ -1,6 +1,6 @@
 import { useContext} from "react";
 import { CartContext } from "../../../../Context/Cart";
-import { Minus, Plus } from "phosphor-react";
+import { Minus, Plus, Trash } from "phosphor-react";
 
 interface PropsListProducts {
   productId: number;
@@ -8,7 +8,7 @@ interface PropsListProducts {
 }
 
 export function ListProduct({ product }: { product: PropsListProducts }) {
-  const { products, HandleLessProduct,HandleAddProduct} = useContext(CartContext);
+  const { products, HandleLessProduct,HandleAddProduct,HandleRemoveProduct} = useContext(CartContext);
 
   const productFind = products.find(
     (produto) => produto.id === product.productId
@@ -38,6 +38,7 @@ export function ListProduct({ product }: { product: PropsListProducts }) {
         <button className="cursor-pointer" onClick={() => HandleAddProduct(product.productId)}>
           <Plus size={14} />
         </button>
+        <Trash size={20} fill="red" className="cursor-pointer ml-4" onClick={()=>HandleRemoveProduct(product.productId)}/>
       </div>
     </div>
   );

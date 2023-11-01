@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useCallback, useEffect, useState } from "react";
 import { api } from "../axios";
 
 interface CartProviderProps {
@@ -16,6 +16,7 @@ interface CartContextProps {
   GetUser: (data: { username: string; password: string }) => void;
   HandleLessProduct: (id: number) => void;
   HandleAddProduct: (id: number) => void;
+  HandleRemoveProduct: (id: number) => void;
 }
 
 interface UsersProps {
@@ -124,7 +125,7 @@ export function CartProvider({ children }: CartProviderProps) {
       setCart((state) => {
         const updatedProducts = state.products.map((product) => {
           if (id === product.productId) {
-            if(product.quantity > 0){
+            if(product.quantity > 1){
             return {
               ...product,
               quantity: product.quantity - 1,
@@ -160,39 +161,53 @@ export function CartProvider({ children }: CartProviderProps) {
           products: updatedProducts,
         };
       });
-      
         
     }
     
   }
 
+  
+
+  const getSubtotalCart = useCallback(() => {
+    let subtotal = 0;
+    if (!objIsEmpty(Cart) && Cart.products.length > 0) {
+      Cart.products.forEach((cartProduct) => {
+        const product = products.find((p) => p.id === cartProduct.productId);
+        if (product) {
+          subtotal += product.price * cartProduct.quantity;
+        }
+      });
+    }
+    return subtotal;
+  }, [Cart, products]);
+
+  function HandleRemoveProduct(id:number){
+    Cart.products.forEach((product)=>{
+      if(id === product.productId){
+        setCart((state) => {
+          const updatedProducts = state.products.filter((p) => p.productId !== id);
+          return {
+            ...state,
+            products: updatedProducts,
+          };
+        });
+      }
+    })
+  }
+  
   useEffect(() => {
     setLoading(true);
     GetDataProducts();
     GetAllUsers();
     setLoading(false);
   }, []);
-
+  
   useEffect(() => {
-
-    function GetSubtotalCart() {
-      if (!objIsEmpty(Cart) && Cart.products.length > 0) {
-        setLoading(true);
-        Cart.products.map((Cartproduct) => {
-          products.map((product) => {
-            if (Cartproduct.productId === product.id) {
-              return setSubtotal((state) => state + (product.price * Cartproduct.quantity));
-            }
-          })
-        })
-      }
-    }
-
-    GetSubtotalCart();
+    setSubtotal(getSubtotalCart());
     setLoading(false);
 
 
-  }, [Cart, products]);
+  }, [getSubtotalCart]);
   return (
     <CartContext.Provider
       value={{
@@ -205,7 +220,8 @@ export function CartProvider({ children }: CartProviderProps) {
         loading,
         GetUser,
         HandleLessProduct,
-        HandleAddProduct
+        HandleAddProduct,
+        HandleRemoveProduct
 
       }}
     >
