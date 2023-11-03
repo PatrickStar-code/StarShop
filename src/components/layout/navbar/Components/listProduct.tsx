@@ -8,7 +8,7 @@ interface PropsListProducts {
 }
 
 export function ListProduct({ product }: { product: PropsListProducts }) {
-  const { products, HandleLessProduct,HandleAddProduct,HandleRemoveProduct} = useContext(CartContext);
+  const { products, HandleLessProduct,HandleRemoveProduct} = useContext(CartContext);
 
   const productFind = products.find(
     (produto) => produto.id === product.productId
@@ -35,7 +35,7 @@ export function ListProduct({ product }: { product: PropsListProducts }) {
           <Minus size={14} />
         </button>
         {product.quantity}
-        <button className="cursor-pointer" onClick={() => HandleAddProduct(product.productId)}>
+        <button className="cursor-pointer">
           <Plus size={14} />
         </button>
         <Trash size={20} fill="red" className="cursor-pointer ml-4" onClick={()=>HandleRemoveProduct(product.productId)}/>

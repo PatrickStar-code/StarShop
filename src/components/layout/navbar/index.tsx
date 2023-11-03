@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { CartContext } from "../../../Context/Cart";
-import { ListProduct } from "./Components/listProduct";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const schema = z.object({
@@ -84,16 +83,11 @@ export function Navbar() {
                   {!objIsEmpty(Cart) ? Cart.products.length : 0} Items
                 </span>
                 <div className="flex flex-col">
-                  <div className="">
-                    {!objIsEmpty(Cart) ?
-                      Cart.products.map((product) => (
-                        <ListProduct key={product.productId} product={product} />
-                      )) : (
-                        <span className="text-info">Cart is empty</span>
+                    {objIsEmpty(Cart) && (
+                        <span className="text-info text-center text-[1rem] m-1">Cart is empty</span>
                       )
                       
                       }
-                  </div>
                 </div>
                 <span className="text-info">
                   Subtotal: R$ {subtotal.toFixed(2)}

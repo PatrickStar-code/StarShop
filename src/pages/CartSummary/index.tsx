@@ -4,7 +4,7 @@ import { Product } from "./components/Product";
 import { useNavigate } from "react-router-dom";
 
 export function CartSummary() {
-    const {Cart} = useContext(CartContext);
+    const {Cart,subtotal} = useContext(CartContext);
     const Navigate = useNavigate();
     function objIsEmpty(obj: object) {
         for (const _prop in obj) {
@@ -15,20 +15,28 @@ export function CartSummary() {
     
 
   return (
-    <div className="h-screen bg-gray-300">
+    <div className="md:h-screen lg:h-[55rem]  bg-gray-300">
       <div className="py-12">
-        <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg  md:max-w-5xl">
+        <div className="max-w-md  mx-auto bg-gray-100 shadow-lg rounded-lg  md:max-w-5xl">
           <div className="md:flex ">
-            <div className="w-full p-4 px-5 py-5">
-              <div className="md:grid md:grid-cols-3 gap-2 ">
-                <div className="col-span-2 p-5">
+            <div className="w-full  p-4 px-5 py-5">
+              <div className="md:grid md:grid-cols-3 gap-2">
+                <div className="col-span-2 p-5 h-[30rem] overflow-y-scroll">
                   <h1 className="text-xl font-medium ">Shopping Cart</h1>
+                  <div className=" h-[18rem]">
 
-                  {!objIsEmpty(Cart) && Cart.products.map((product)=>{
+                  {!objIsEmpty(Cart) ? Cart.products.map((product)=>{
                       return (
                         <Product key={product.productId} product={product}/>
                       )
-                  })}
+                  }) : (
+                      <div className="flex flex-col justify-center gap-6 items-center h-[20rem]">
+                        <span className="text-xl font-medium ">Your cart is empty &#x1F614; </span>
+                          <img src="src/assets/undraw_empty_cart_co35.svg" width={"300"} alt="empty-cart"/>
+                      </div>
+                  )}
+                                        </div>
+
 
 
                   <div className="flex justify-between items-center mt-6 pt-6 border-t">
@@ -45,7 +53,7 @@ export function CartSummary() {
                       </span>
                       <span className="text-lg font-bold text-gray-800 ">
                         {" "}
-                        $24.90
+                        R$ {subtotal.toFixed(2)}
                       </span>
                     </div>
                   </div>
