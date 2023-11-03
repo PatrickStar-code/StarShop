@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { CartContext } from "../../../Context/Cart";
 import { ListProduct } from "./Components/listProduct";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const schema = z.object({
   username: z.string(),
@@ -17,8 +18,18 @@ export function Navbar() {
     resolver: zodResolver(schema),
   });
 
-  const { GetUser, User, loadingLogin, LoginError, Cart, subtotal } =
+  const { GetUser, User, loadingLogin, LoginError, Cart, subtotal,HandleLogout } =
     useContext(CartContext);
+
+    const Navigate = useNavigate();
+
+
+  function Logout(){
+    HandleLogout();
+    localStorage.clear();
+    Navigate("/");
+    
+  }
 
   function username(data: FormData) {
     GetUser(data);
@@ -27,7 +38,7 @@ export function Navbar() {
 
   
 
-  function objIsEmpty(obj: object) {
+   function objIsEmpty(obj: object) {
     for (const _prop in obj) {
       return false; 
     }
@@ -66,14 +77,14 @@ export function Navbar() {
             </label>
             <div
               tabIndex={0}
-              className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+              className="mt-3 z-[10] card card-compact dropdown-content w-52 bg-base-100 shadow"
             >
               <div className="card-body">
                 <span className="font-bold text-lg">
                   {!objIsEmpty(Cart) ? Cart.products.length : 0} Items
                 </span>
                 <div className="flex flex-col">
-                  <div>
+                  <div className="">
                     {!objIsEmpty(Cart) ?
                       Cart.products.map((product) => (
                         <ListProduct key={product.productId} product={product} />
@@ -88,9 +99,9 @@ export function Navbar() {
                   Subtotal: R$ {subtotal.toFixed(2)}
                 </span>
                 <div className="card-actions">
-                  <button className="btn btn-primary btn-block">
+                  <NavLink to="/cart" className="btn btn-primary btn-block">
                     View cart
-                  </button>
+                  </NavLink>
                 </div>
               </div>
             </div>
@@ -107,13 +118,7 @@ export function Navbar() {
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <a className="justify-between">Profile</a>
-                </li>
-                <li>
-                  <a>Settings</a>
-                </li>
-                <li>
-                  <a>Logout</a>
+                  <a onClick={Logout}>Logout</a>
                 </li>
               </ul>
             </div>

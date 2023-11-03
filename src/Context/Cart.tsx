@@ -17,6 +17,8 @@ interface CartContextProps {
   HandleLessProduct: (id: number) => void;
   HandleAddProduct: (id: number) => void;
   HandleRemoveProduct: (id: number) => void;
+  AddNewProduct(id: number): void;
+  HandleLogout: () => void;
 }
 
 interface UsersProps {
@@ -62,7 +64,7 @@ export interface ProductsProps {
   };
 }
 
-interface CartProducts{
+export interface CartProducts{
   productId: number;
   quantity: number;
   
@@ -195,6 +197,67 @@ export function CartProvider({ children }: CartProviderProps) {
     })
   }
   
+  function AddNewProduct(id:number){
+    if(Cart.id !== undefined){
+      const indexInCart = Cart.products.findIndex((product)=>{
+        return id === product.productId
+      })
+      if(indexInCart !== -1){
+        const updateProducts = Cart.products.map((product)=>{
+          if(id === product.productId){
+            return {
+              ...product,
+              quantity: product.quantity + 1
+            }
+          }
+          return product
+        })
+        setCart((state)=>{
+          return{
+            ...state,
+            products:updateProducts
+          }
+        })
+      }
+      else{
+        setCart((state)=>{
+          return{
+            ...state,
+            products:[
+              ...state.products,
+              {
+                productId: id,
+                quantity: 1
+              }
+            ]
+          }
+        })
+      }
+    }
+    else{
+      const NewCart = {
+        id: 8,
+        userId:0,
+        date: (new Date).toString(),
+        products:[
+          {
+            productId: id,
+            quantity: 1
+          }
+        ]
+      }
+      setCart(NewCart)
+    }
+    
+  }
+
+  function HandleLogout(){
+    setUser({} as UsersProps);
+    setCart({} as CartProps);
+    setLoginError(false);
+  }
+
+  
   useEffect(() => {
     setLoading(true);
     GetDataProducts();
@@ -221,7 +284,10 @@ export function CartProvider({ children }: CartProviderProps) {
         GetUser,
         HandleLessProduct,
         HandleAddProduct,
-        HandleRemoveProduct
+        HandleRemoveProduct,
+        AddNewProduct,
+        HandleLogout
+        
 
       }}
     >

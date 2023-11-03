@@ -5,7 +5,7 @@ export function Loader() {
     const {loading} = useContext(CartContext)
 
   return (
-    <div className="inset-0   fixed flex w-full h-full items-center justify-center duration-300 transition-opacity z-10" style={!loading ? {display: "none"} : {display: "flex"} }>
+    <div className="inset-0   fixed flex w-full bg-black h-full items-center justify-center duration-300 transition-opacity z-10" style={!loading ? {display: "none"} : {display: "flex"} }>
       <div className="flex-col">
         <div className="w-24 h-24">
           <svg viewBox="0 0 860.1 876.5">
