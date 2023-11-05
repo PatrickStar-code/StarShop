@@ -50,7 +50,7 @@ export function Navbar() {
     <>
       <div className="navbar bg-base-100 px-12">
         <div className="flex-1">
-          <img src="src/assets/logo.png" alt="" className="w-20 pt-2" />
+          <img src="/public/assets/logo.png" alt="" className="w-20 pt-2" />
         </div>
 
         <div className="flex-none">
@@ -106,7 +106,7 @@ export function Navbar() {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full border-2">
-                  <img src="src/assets/user.jpg" />
+                  <img src="/public/assets/user.jpg" />
                 </div>
               </label>
               <ul
