@@ -6,6 +6,7 @@ import { Errorpage } from "./404";
 
 export function Router() {
   return (
+    
     <Routes>
       <Route path="*" element={<Errorpage/>} />
 
