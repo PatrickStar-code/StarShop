@@ -32,7 +32,7 @@ export function CartSummary() {
                   }) : (
                       <div className="flex flex-col justify-center gap-6 items-center h-[20rem]">
                         <span className="text-xl font-medium ">Your cart is empty &#x1F614; </span>
-                          <img src="/public/assets/undraw_empty_cart_co35.svg" width={"300"} alt="empty-cart"/>
+                          <img src="assets/undraw_empty_cart_co35.svg" width={"300"} alt="empty-cart"/>
                       </div>
                   )}
                                         </div>
