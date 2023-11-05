@@ -28,7 +28,7 @@ export function Home() {
             alt="logo"
             width="420"
             height="120"
-            src="src\assets\undraw_shopping_app_flsj.svg"
+            src="/public/assets/logo.png"
           />
         </div>
       </div>
