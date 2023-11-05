@@ -118,15 +118,13 @@ export function Navbar() {
             </div>
           ) : (
             <div>
-              <button
+              <label
                 className="btn btn-primary"
-                onClick={() =>
-                  document.getElementById("usernameModal")?.showModal()
-                }
+                htmlFor="usernameModal" 
               >
                 lOGIN
-              </button>
-              <dialog id="usernameModal" className="modal sm:modal-middle">
+              </label>
+              <input type="checkbox" id="usernameModal" className="modal sm:modal-middle">
                 <div className="modal-box">
                   <form method="dialog">
                     {/* if there is a button in form, it will close the modal */}
@@ -193,7 +191,7 @@ export function Navbar() {
                 <form method="dialog" className="modal-backdrop">
                   <button>close</button>
                 </form>
-              </dialog>
+              </input>
             </div>
           )}
         </div>
